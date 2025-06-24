@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "48002840638",
+    "project_id": "play-app-9c4df",
+    "storage_bucket": "play-app-9c4df.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48002840638:android:94bb4408445be930ccb96f",
+        "android_client_info": {
+          "package_name": "com.aus.org.badminton"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48002840638-0e9otrh0nlrk4nj2sjq5uba6t7h87cf3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aus.org.badminton",
+            "certificate_hash": "7d15ac0ba919db20921ffbd92ae563cb435d5cdc"
+          }
+        },
+        {
+          "client_id": "48002840638-8ejt9vbtvm9ag981ka9jf4qo3gefl6i5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aus.org.badminton",
+            "certificate_hash": "474e359c638fe3679bf73c1605cfad1b52beace8"
+          }
+        },
+        {
+          "client_id": "48002840638-sg7si4r4chl68s3eg3r3uuh1lffm6oen.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDccMhQ-Arhgv4oQsxhRy2rbp3-f1SChdM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48002840638-sg7si4r4chl68s3eg3r3uuh1lffm6oen.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

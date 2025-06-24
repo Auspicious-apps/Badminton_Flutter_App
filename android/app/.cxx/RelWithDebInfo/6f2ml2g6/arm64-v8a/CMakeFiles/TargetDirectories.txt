@@ -1,0 +1,2 @@
+/Users/anilsharma/Documents/GitHub/Badminton-App/android/app/.cxx/RelWithDebInfo/6f2ml2g6/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/anilsharma/Documents/GitHub/Badminton-App/android/app/.cxx/RelWithDebInfo/6f2ml2g6/arm64-v8a/CMakeFiles/rebuild_cache.dir

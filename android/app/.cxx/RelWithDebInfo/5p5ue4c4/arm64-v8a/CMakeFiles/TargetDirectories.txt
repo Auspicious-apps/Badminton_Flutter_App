@@ -1,0 +1,2 @@
+/Users/puneetkumar/Desktop/Badminton-App 2/android/app/.cxx/RelWithDebInfo/5p5ue4c4/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/puneetkumar/Desktop/Badminton-App 2/android/app/.cxx/RelWithDebInfo/5p5ue4c4/arm64-v8a/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/anilsharma/Downloads/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/anilsharma/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/anilsharma/Documents/GitHub/Badminton-App/android/app/.cxx/Debug/2b3w1r3s/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/anilsharma/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/anilsharma/Documents/GitHub/Badminton-App/android/app/.cxx/Debug/2b3w1r3s/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

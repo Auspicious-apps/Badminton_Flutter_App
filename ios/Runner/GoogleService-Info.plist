@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>48002840638-muij1uqvo6867lpp7qk97gk5q494p2k6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.48002840638-muij1uqvo6867lpp7qk97gk5q494p2k6</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>48002840638-0e9otrh0nlrk4nj2sjq5uba6t7h87cf3.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAe9XHrz-FBdKLDl3uD5XD13bltFtKBVGs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>48002840638</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.aus.org.badminton</string>
+	<key>PROJECT_ID</key>
+	<string>play-app-9c4df</string>
+	<key>STORAGE_BUCKET</key>
+	<string>play-app-9c4df.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:48002840638:ios:36dcf9c2c37104d4ccb96f</string>
+</dict>
+</plist>

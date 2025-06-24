@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Define your own green color -->
+    <color name="green">#4CAF50</color>
+    <!-- You can add other colors here as needed -->
+</resources>
