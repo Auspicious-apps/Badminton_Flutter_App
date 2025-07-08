@@ -47,43 +47,50 @@ class Data {
   String? token;
   num? totalMatches;
   num? totalFriends;
+  num? unreadChats;
+  num? unreadNotifications;
+
   num? playCoins;
   String? loyaltyTier;
   Referrals? referrals;
 
   Data(
       {this.sId,
-        this.role,
-        this.fullName,
-        this.firstName,
-        this.referrals,
-        this.lastName,
-        this.email,
-        this.authType,
-        this.countryCode,
-        this.phoneNumber,
-        this.profilePic,
-        this.emailVerified,
-        this.phoneVerified,
-        this.language,
-        this.fcmToken,
-        this.productsLanguage,
-        this.dob,
-        this.country,
-        this.location,
-        this.isBlocked,
-        this.createdAt,
-        this.updatedAt,
-        this.token,
-        this.totalMatches,
-        this.totalFriends,
-        this.playCoins,
-        this.loyaltyTier});
+      this.role,
+      this.fullName,
+      this.firstName,
+      this.referrals,
+      this.unreadChats,
+      this.unreadNotifications,
+      this.lastName,
+      this.email,
+      this.authType,
+      this.countryCode,
+      this.phoneNumber,
+      this.profilePic,
+      this.emailVerified,
+      this.phoneVerified,
+      this.language,
+      this.fcmToken,
+      this.productsLanguage,
+      this.dob,
+      this.country,
+      this.location,
+      this.isBlocked,
+      this.createdAt,
+      this.updatedAt,
+      this.token,
+      this.totalMatches,
+      this.totalFriends,
+      this.playCoins,
+      this.loyaltyTier});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     role = json['role'];
     fullName = json['fullName'];
+    unreadChats = json['unreadChats'];
+    unreadNotifications = json['unreadNotifications'];
     firstName = json['firstName'];
     lastName = json['lastName'];
     email = json['email'];
@@ -119,6 +126,8 @@ class Data {
     data['_id'] = this.sId;
     data['role'] = this.role;
     data['fullName'] = this.fullName;
+    data['unreadChats'] = this.unreadChats;
+    data['unreadNotifications'] = this.unreadNotifications;
     data['firstName'] = this.firstName;
     data['lastName'] = this.lastName;
     data['email'] = this.email;
@@ -180,10 +189,10 @@ class Referrals {
 
   Referrals(
       {this.code,
-        this.expiryDate,
-        this.usageCount,
-        this.maxUsage,
-        this.isActive});
+      this.expiryDate,
+      this.usageCount,
+      this.maxUsage,
+      this.isActive});
 
   Referrals.fromJson(Map<String, dynamic> json) {
     code = json['code'];

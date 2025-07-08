@@ -9,7 +9,7 @@ import '../models/friend_Request_Responsemodel.dart';
 import '../models/get_user_by_id_model.dart';
 
 class PgProfileDetailController extends GetxController {
-  var friendId="".obs;
+  var friendId = "".obs;
   RxBool loading = true.obs;
   RxBool load = false.obs;
   RxBool isAdmin = false.obs;
@@ -36,13 +36,14 @@ class PgProfileDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-  if(Get.arguments!=null){
-    print(">>>>>>>>>id>>>>>>>>>>>${Get.arguments['isAdmin']}");
-    friendId.value=Get.arguments['id'];
-    isAdmin.value=Get.arguments['isAdmin'];
+    if (Get.arguments != null) {
+      print(">>>>>>>>>id>>>>>>>>>>>${Get.arguments['isAdmin']}");
+      friendId.value = Get.arguments['id'];
+      isAdmin.value = Get.arguments['isAdmin'];
 
-    friendGetById();
-;  }
+      friendGetById();
+      ;
+    }
     // // Initialize dummy previous games data
     // previousGames.addAll([
     //   {
@@ -68,123 +69,108 @@ class PgProfileDetailController extends GetxController {
     // ]);
   }
 
-  void friendGetById()async {
-    loading.value=true;
+  void friendGetById() async {
+    loading.value = true;
     Get.closeAllSnackbars(); //
     try {
       final response = await _apiRepository.getUserId(id: friendId.value);
       if (response != null) {
         userdata.value = response;
         userdata.refresh();
-        loading.value=false;
-
+        loading.value = false;
       }
     } catch (e) {
       Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.TOP);
-      loading.value=false;
+      loading.value = false;
     }
   }
 
-
-
-  void RefreshId()async {
-load.value=true;
+  void RefreshId() async {
+    load.value = true;
     Get.closeAllSnackbars(); //
     try {
       final response = await _apiRepository.getUserId(id: friendId.value);
       if (response != null) {
         userdata.value = response;
         userdata.refresh();
-        load.value=false;
-
+        load.value = false;
       }
     } catch (e) {
       Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.TOP);
-      load.value=false;
+      load.value = false;
     }
   }
 
-  void addFriend()async {
-
+  void addFriend() async {
     Get.closeAllSnackbars(); //
-    // if (loading.value) return;
+    load.value = true;
 
     try {
+      Map<String, dynamic> requestModel =
+          AuthRequestModel.sendFriendRequest(friendId: friendId.value);
 
-      Map<String, dynamic> requestModel = AuthRequestModel.sendFriendRequest(
-      friendId:  friendId.value
-      );
-
-      final response = await _apiRepository.sendFriendRequest(dataBody: requestModel);
+      final response =
+          await _apiRepository.sendFriendRequest(dataBody: requestModel);
       if (response != null) {
+        load.value = false;
         responseModel = response;
-
-        Get.snackbar("Success",responseModel.message??"");
+        Get.snackbar("Success", responseModel.message ?? "");
         RefreshId();
       }
     } catch (e) {
-      loading.value=false;
+      load.value = false;
+      loading.value = false;
       Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.TOP);
     }
   }
 
-  void confirmFriendRequest()async {
-
-    try{
-
+  void confirmFriendRequest() async {
+    try {
       Map<String, dynamic> requestModel = AuthRequestModel.acceptRequestModel(
-          requestId:userdata.value.data?.relationshipId??"",
-          status: "accepted"
-      );
+          requestId: userdata.value.data?.relationshipId ?? "",
+          status: "accepted");
 
-      final response = await _apiRepository.confirmFriendRequest(dataBody: requestModel);
+      final response =
+          await _apiRepository.confirmFriendRequest(dataBody: requestModel);
 
       if (response != null) {
         // loading.value=false;
-        confirmRequest.value=response;
+        confirmRequest.value = response;
 
-        Get.snackbar("Success",confirmRequest.value.message??"" );
+        Get.snackbar("Success", confirmRequest.value.message ?? "");
         RefreshId();
-
       }
-
-
     } catch (e) {
       Get.snackbar("Error", e.toString());
-      loading.value=false;
-    }finally{
-      loading.value=false;
+      loading.value = false;
+    } finally {
+      loading.value = false;
     }
-
   }
-  void removeFriendRequest()async {
 
-    try{
-
+  void removeFriendRequest() async {
+    try {
+      load.value = true;
       Map<String, dynamic> requestModel = AuthRequestModel.acceptRequestModel(
-          requestId:userdata.value.data?.relationshipId??"",
-          status: "unfriend"
-      );
+          requestId: userdata.value.data?.relationshipId ?? "",
+          status: "unfriend");
 
-      final response = await _apiRepository.confirmFriendRequest(dataBody: requestModel);
+      final response =
+          await _apiRepository.confirmFriendRequest(dataBody: requestModel);
 
       if (response != null) {
         // loading.value=false;
-        confirmRequest.value=response;
+        confirmRequest.value = response;
 
-        Get.snackbar("Success",confirmRequest.value.message??"" );
+        Get.snackbar("Success", confirmRequest.value.message ?? "");
         RefreshId();
-
       }
-
-
     } catch (e) {
       Get.snackbar("Error", e.toString());
-      loading.value=false;
-    }finally{
-      loading.value=false;
+      load.value = false;
+    } finally {
+      load.value = false;
     }
-
   }
   // // Method to handle Message action
   // void sendMessage() {
@@ -192,30 +178,22 @@ load.value=true;
   // }
 
   void sendMessage() async {
-
-
-
-
-
     try {
-
       Map<String, dynamic> requestModel;
 
       requestModel = AuthRequestModel.MessageRequest(
-          recipientId: userdata.value.data?.sId,
-
+        recipientId: userdata.value.data?.sId,
       );
 
-
-    final response = await _apiRepository.IndividualChatCreate(dataBody: requestModel);
+      final response =
+          await _apiRepository.IndividualChatCreate(dataBody: requestModel);
       individualchat.value = response;
       individualchat.refresh();
 
       print(">>>>>>>>>>>>>>>${individualchat.value.data?.sId}");
 
-
-      Get.toNamed("/chat_screen",arguments: {"id":individualchat.value.data?.sId});
-
+      Get.toNamed("/chat_screen",
+          arguments: {"id": individualchat.value.data?.sId});
     } catch (e) {
       debugPrint('Error sending message: $e');
       Get.snackbar('Error', 'Failed to send message');

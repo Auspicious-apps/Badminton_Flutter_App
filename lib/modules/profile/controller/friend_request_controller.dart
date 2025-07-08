@@ -1,11 +1,10 @@
 import 'package:badminton/modules/auth_module/models/forget_password_responsemodel.dart';
 import 'package:get/get.dart';
 
-
-
 import '../../../repository/api_repository.dart';
 import '../../auth_module/models/auth_requestmodel.dart';
 import '../models/Get_friend_request_model.dart';
+import '../models/individual_chat_start.dart';
 
 class FriendsController extends GetxController {
   Rx<GetRequestsResponseModel> userdata = GetRequestsResponseModel().obs;
@@ -14,7 +13,7 @@ class FriendsController extends GetxController {
   final APIRepository _apiRepository = Get.find<APIRepository>();
   RxBool loading = false.obs;
   // Sample data for friend requests and friends (replace with actual data source)
-
+  Rx<IndividualStartChat> individualchat = IndividualStartChat().obs;
   @override
   void onInit() {
     getFriendRequest();
@@ -36,6 +35,29 @@ class FriendsController extends GetxController {
       loading.value = false;
     } finally {
       loading.value = false;
+    }
+  }
+
+  void sendMessage(String? receipentId) async {
+    try {
+      Map<String, dynamic> requestModel;
+
+      requestModel = AuthRequestModel.MessageRequest(
+        recipientId: receipentId,
+      );
+
+      final response =
+          await _apiRepository.IndividualChatCreate(dataBody: requestModel);
+      individualchat.value = response;
+      individualchat.refresh();
+
+      print(">>>>>>>>>>>>>>>${individualchat.value.data?.sId}");
+
+      Get.toNamed("/chat_screen",
+          arguments: {"id": individualchat.value.data?.sId});
+    } catch (e) {
+      print('Error sending message: $e');
+      Get.snackbar('Error', 'Failed to send message');
     }
   }
 
@@ -123,7 +145,6 @@ class FriendsController extends GetxController {
     }
   }
 
-
   void removeFriendRequest(String? id) async {
     print(">>>>>>>>>>>$id");
     try {
@@ -132,7 +153,7 @@ class FriendsController extends GetxController {
           requestId: id ?? "", status: "unfriend");
 
       final response =
-      await _apiRepository.confirmFriendRequest(dataBody: requestModel);
+          await _apiRepository.confirmFriendRequest(dataBody: requestModel);
 
       if (response != null) {
         // loading.value=false;
@@ -149,7 +170,6 @@ class FriendsController extends GetxController {
       loading.value = false;
     }
   }
-
 
   void blockFriend(String? id) async {
     print(">>>>>>>>>>>$id");

@@ -20,7 +20,7 @@ class NotificationView extends GetView<NotificationController> {
     // Add listener to detect when user reaches the end of the list
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
-          scrollController.position.maxScrollExtent * 0.9 &&
+              scrollController.position.maxScrollExtent * 0.9 &&
           !controller.isLoadingMore.value &&
           controller.hasMoreData.value) {
         controller.loadMoreNotifications();
@@ -50,7 +50,8 @@ class NotificationView extends GetView<NotificationController> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
                                 child: GestureDetector(
                                   onTap: () => {Get.back()},
                                   child: Container(
@@ -73,9 +74,11 @@ class NotificationView extends GetView<NotificationController> {
                               ),
                               Flexible(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Label(
                                         txt: "Notifications",
@@ -85,7 +88,6 @@ class NotificationView extends GetView<NotificationController> {
                                       GestureDetector(
                                         onTap: () {
                                           controller.markAsRead("");
-
                                         },
                                         child: Row(children: [
                                           Image.asset(
@@ -112,7 +114,8 @@ class NotificationView extends GetView<NotificationController> {
                           // Notifications content
                           Obx(() {
                             if (controller.isLoading.value) {
-                              return _buildLoadingIndicator();
+                              return SizedBox();
+                              // return _buildLoadingIndicator();
                             } else if (controller.hasError.value) {
                               return _buildErrorWidget(controller);
                             } else if (controller.notifications.isEmpty) {
@@ -124,16 +127,18 @@ class NotificationView extends GetView<NotificationController> {
                                   // Show loading indicator at the bottom when loading more
                                   Obx(() => controller.isLoadingMore.value
                                       ? Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: const SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
-                                      ),
-                                    ),
-                                  )
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: const SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                      Colors.grey),
+                                            ),
+                                          ),
+                                        )
                                       : const SizedBox.shrink()),
                                 ],
                               );
@@ -310,7 +315,7 @@ class NotificationView extends GetView<NotificationController> {
         return AppAssets.notificationPayment;
       case "FREE_GAME_EARNED":
         return AppAssets.notificationfreegame;
-        case "FREE_GAME_USED":
+      case "FREE_GAME_USED":
         return AppAssets.notificationfreegame;
       case "PLAYER_JOINED_GAME":
         return AppAssets.notificationPlayer;

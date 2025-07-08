@@ -1,7 +1,5 @@
 import 'dart:async';
 
-
-
 import 'package:badminton/app_settings/components/label.dart';
 import 'package:badminton/app_settings/components/widget_global_margin.dart';
 import 'package:badminton/app_settings/constants/app_assets.dart';
@@ -81,170 +79,212 @@ class AllUsers extends GetView<AllUsersController> {
                             controller.searchQuery.refresh();
                             // Cancel the previous timer if it exists
                             if (controller.debounce?.isActive ?? false) {
-                            controller.debounce?.cancel();
+                              controller.debounce?.cancel();
                             }
                             // Start a new timer
                             controller.debounce = Timer(
-                            const Duration(milliseconds: 500),
-                            () {
-                            // Call API after debounce duration
-                            controller.getVenueData();
-                            },
+                              const Duration(milliseconds: 500),
+                              () {
+                                // Call API after debounce duration
+                                controller.getVenueData();
+                              },
                             );
                           },
                         ),
                       ),
                       padVertical(20),
                       Obx(
-                            () => controller.loading.value
+                        () => controller.loading.value
                             ? SizedBox(
-                          height: Get.height, // Provide a fixed height for skeleton
-                          child: SkeletonListView(
-                            itemCount: 5, // Number of skeleton items
-                            itemBuilder: (context, index) => Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SkeletonAvatar(
-                                            style: SkeletonAvatarStyle(
-                                              shape: BoxShape.circle,
-                                              width: 35.w,
-                                              height: 35.h,
+                                height: Get
+                                    .height, // Provide a fixed height for skeleton
+                                child: SkeletonListView(
+                                  itemCount: 5, // Number of skeleton items
+                                  itemBuilder: (context, index) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                SkeletonAvatar(
+                                                  style: SkeletonAvatarStyle(
+                                                    shape: BoxShape.circle,
+                                                    width: 35.w,
+                                                    height: 35.h,
+                                                  ),
+                                                ),
+                                                padHorizontal(8),
+                                                SkeletonLine(
+                                                  style: SkeletonLineStyle(
+                                                    height: 14.h,
+                                                    width: 100.w,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                          padHorizontal(8),
-                                          SkeletonLine(
-                                            style: SkeletonLineStyle(
-                                              height: 14.h,
-                                              width: 100.w,
-                                              borderRadius:
-                                              BorderRadius.circular(8),
+                                            SkeletonLine(
+                                              style: SkeletonLineStyle(
+                                                height: 14.h,
+                                                width: 80.w,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      SkeletonLine(
-                                        style: SkeletonLineStyle(
-                                          height: 14.h,
-                                          width: 80.w,
-                                          borderRadius:
-                                          BorderRadius.circular(8),
+                                          ],
                                         ),
-                                      ),
-                                    ],
+                                        padVertical(8),
+                                        const Divider(),
+                                        padVertical(8),
+                                      ],
+                                    ),
                                   ),
-                                  padVertical(8),
-                                  const Divider(),
-                                  padVertical(8),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
-                            : ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount:
-                          controller.allUsers.value.data?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            final request =
-                            controller.allUsers.value.data?[index];
-                            return GestureDetector(
-                              onTap: () {
-                                Get.toNamed('/userprofiledetail',
-                                    arguments: {"id": request?.sId ?? "","isAdmin":false});
-
-                              },
-                              child: Container(
-                                decoration: const BoxDecoration(),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment
-                                            .spaceBetween,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                ),
+                              )
+                            : (controller.allUsers.value.data?.length ?? 0) > 0
+                                ? ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: controller
+                                            .allUsers.value.data?.length ??
+                                        0,
+                                    itemBuilder: (context, index) {
+                                      final request = controller
+                                          .allUsers.value.data?[index];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed('/userprofiledetail',
+                                              arguments: {
+                                                "id": request?.sId ?? "",
+                                                "isAdmin": false
+                                              });
+                                        },
+                                        child: Container(
+                                          decoration: const BoxDecoration(),
+                                          child: Column(
                                             children: [
-                                              Container(
-                                                height: 34,
-                                                width: 34,
-                                                padding: const EdgeInsets.all(2),
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.lightGrey,
-                                                  borderRadius: BorderRadius.circular(45),
-                                                  border: Border.all(
-                                                    width: 2,
-                                                    color: AppColors.blue,
-                                                  ),
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(45),
-                                                  child: (request?.profilePic != null &&
-                                                      request?.profilePic?.isNotEmpty==true)
-                                                      ? Image.network(
-                                                    "${imageBaseUrl}${request?.profilePic}",
-                                                    fit: BoxFit.cover,
-                                                    errorBuilder: (context, error, stackTrace) {
-                                                      return Container(
-                                                        color: AppColors.lightGrey,
-                                                        child: Icon(
-                                                          Icons.person, // Error image/icon
-                                                          size: 20.sp,
-                                                          color: AppColors.grey,
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 15),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                          height: 34,
+                                                          width: 34,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(2),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: AppColors
+                                                                .lightGrey,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        45),
+                                                            border: Border.all(
+                                                              width: 2,
+                                                              color: AppColors
+                                                                  .blue,
+                                                            ),
+                                                          ),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        45),
+                                                            child: (request?.profilePic !=
+                                                                        null &&
+                                                                    request?.profilePic
+                                                                            ?.isNotEmpty ==
+                                                                        true)
+                                                                ? Image.network(
+                                                                    "${imageBaseUrl}${request?.profilePic}",
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                    errorBuilder:
+                                                                        (context,
+                                                                            error,
+                                                                            stackTrace) {
+                                                                      return Container(
+                                                                        color: AppColors
+                                                                            .lightGrey,
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .person, // Error image/icon
+                                                                          size:
+                                                                              20.sp,
+                                                                          color:
+                                                                              AppColors.grey,
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  )
+                                                                : Container(
+                                                                    color: AppColors
+                                                                        .lightGrey,
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .person, // Default icon when no image
+                                                                      size:
+                                                                          20.sp,
+                                                                      color: AppColors
+                                                                          .grey,
+                                                                    ),
+                                                                  ),
+                                                          ),
                                                         ),
-                                                      );
-                                                    },
-                                                  )
-                                                      : Container(
-                                                    color: AppColors.lightGrey,
-                                                    child: Icon(
-                                                      Icons.person, // Default icon when no image
-                                                      size: 20.sp,
-                                                      color: AppColors.grey,
+                                                        padHorizontal(8),
+                                                        Label(
+                                                          txt: request
+                                                                  ?.fullName ??
+                                                              "",
+                                                          type: TextTypes
+                                                              .f_14_700,
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ),
+                                                    Label(
+                                                      txt: request?.isFriend ==
+                                                              true
+                                                          ? "Already Friend"
+                                                          : "",
+                                                      type: TextTypes.f_14_700,
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-
-                                              padHorizontal(8),
-                                              Label(
-                                                txt:
-                                                request?.fullName ?? "",
-                                                type: TextTypes.f_14_700,
-                                              ),
+                                              padVertical(8),
+                                              const Divider(),
+                                              padVertical(8),
                                             ],
                                           ),
-                                          Label(
-                                            txt: request?.isFriend == true
-                                                ? "Already Friend"
-                                                : "",
-                                            type: TextTypes.f_14_700,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    padVertical(8),
-                                    const Divider(),
-                                    padVertical(8),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : Container(
+                                    height: Get.height * 0.2,
+                                    child: Center(child: Text("No User Found")),
+                                  ),
                       ),
                     ],
                   ),

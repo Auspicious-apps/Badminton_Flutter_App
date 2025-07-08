@@ -10,18 +10,20 @@ class DashboardController extends GetxController {
 
   void onTabSelected(int index) {
     selectedIndex.value = index;
-    if(index==1){
-      final playgame=Get.put<PlayController>(PlayController());
-     playgame.loading.value=true;
-      playgame.getCurrentLocation();
-    }else  if(index==3){
+    if (index == 1) {
+      final playgame = Get.put<PlayController>(PlayController());
+      playgame.loading.value = true;
+      playgame.currentDate.value = "";
+      playgame.game.value = "all";
 
-      final playgame=Get.put<MoreController>(MoreController());
-      playgame.loading.value=true;
+      playgame.getCurrentLocation();
+    } else if (index == 3) {
+      final playgame = Get.put<MoreController>(MoreController());
+      playgame.loading.value = true;
       playgame.getData();
-    }else{
-      final playgame=Get.put<TabHomeController>(TabHomeController());
-      playgame.loading.value=true;
+    } else {
+      final playgame = Get.put<TabHomeController>(TabHomeController());
+      playgame.loading.value = true;
       playgame.getCurrentLocation();
     }
     pageController.jumpToPage(index);

@@ -1,0 +1,2 @@
+/Users/puneetkumar/Desktop/Badminton_Flutter_App/android/app/.cxx/RelWithDebInfo/1f576836/x86/CMakeFiles/edit_cache.dir
+/Users/puneetkumar/Desktop/Badminton_Flutter_App/android/app/.cxx/RelWithDebInfo/1f576836/x86/CMakeFiles/rebuild_cache.dir

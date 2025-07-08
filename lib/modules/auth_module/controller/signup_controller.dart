@@ -58,14 +58,14 @@ class SignupController extends GetxController {
     getFCMToken();
   }
 
-
   Future<void> getFCMToken() async {
     try {
       // Get notification service
       final notificationService = Get.find<NotificationService>();
-      
+
       // Request permission for notifications (required for iOS)
-      NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+      NotificationSettings settings =
+          await FirebaseMessaging.instance.requestPermission(
         alert: true,
         badge: true,
         sound: true,
@@ -127,26 +127,24 @@ class SignupController extends GetxController {
 
   Future<void> hitSignupApiCall() async {
     Get.closeAllSnackbars();
-    if (loading.value==true) return;
+    if (loading.value == true) return;
     try {
-      loading.value=true;
+      loading.value = true;
       if (latitude.value == 0.0 || longitude.value == 0.0) {
-        Get.snackbar("Error", "Location data not available. Please enable location services.");
-        loading.value=false;
+        Get.snackbar("Error",
+            "Location data not available. Please enable location services.");
+        loading.value = false;
         return;
-
       }
       if (firstNameController.text.isEmpty) {
         Get.snackbar("Error", "Please enter first name ");
-        loading.value=false;
+        loading.value = false;
         return;
-
       }
       if (lastNameController.text.isEmpty) {
         Get.snackbar("Error", "Please enter last name ");
-        loading.value=false;
+        loading.value = false;
         return;
-
       }
 
       if (emailController.text.isEmpty) {
@@ -161,21 +159,16 @@ class SignupController extends GetxController {
         return;
       }
 
-      if (phoneController.text.length<10) {
+      if (phoneController.text.length < 10) {
         Get.snackbar("Error", "Phone number must be 10 digits.");
-        loading.value=false;
+        loading.value = false;
         return;
-
       }
 
-
-
-
-      if (passwordController.text.length<8) {
+      if (passwordController.text.length < 8) {
         Get.snackbar("Error", "Password must be at least 8 digit");
-        loading.value=false;
+        loading.value = false;
         return;
-
       }
 
       // ✅ Now sending selectedCountry phoneCode dynamically
@@ -186,14 +179,14 @@ class SignupController extends GetxController {
         phoneNumber: phoneController.text.trim(),
         countryCode: "+${selectedCountry.value.phoneCode}", // 👈 important
         password: passwordController.text.trim(),
-        referralUsed: refferalController?.text??"",
+        referralUsed: refferalController?.text ?? "",
 
         dob: birthDate.value.trim(),
         coordinates: [
           longitude.value,
           latitude.value,
         ],
-        fcmToken: fcmtoken?.value??"",  // optional: provide if available
+        fcmToken: fcmtoken?.value ?? "", // optional: provide if available
       );
 
       final response = await _apiRepository.signupApi(dataBody: requestModel);
@@ -201,27 +194,26 @@ class SignupController extends GetxController {
       if (response != null) {
         responseModel = response;
         print("token: ${responseModel.data?.token}");
-        _localStorage.saveAuthToken(responseModel?.data?.token??"");
+        _localStorage.saveAuthToken(responseModel?.data?.token ?? "");
         firstNameController.clear();
         lastNameController.clear();
         emailController.clear();
         phoneController.clear();
         passwordController.clear();
         refferalController.clear();
-        birthDate.value='';
-        Get.toNamed('/otpVerification',arguments: {"data":responseModel});
-        loading.value=false;
+        birthDate.value = '';
+        Get.toNamed('/otpVerification', arguments: {"data": responseModel});
+        loading.value = false;
         Get.snackbar("Successful", "Signup Successfully");
       }
     } catch (e) {
       Get.snackbar("Error", e.toString());
-      loading.value=false;
+      loading.value = false;
     }
   }
 
   @override
   void onClose() {
-
     super.onClose();
   }
 }

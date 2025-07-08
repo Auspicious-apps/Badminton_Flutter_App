@@ -505,9 +505,10 @@ class PgTabhome extends GetView<TabHomeController> {
 
   Widget _buildBody(BuildContext context) {
     return SafeArea(
-      child:RefreshIndicator(
+      child: RefreshIndicator(
         onRefresh: () async {
           await controller.getCurrentLocation();
+          await controller.getProfile();
         },
         color: AppColors.primaryColor,
         backgroundColor: AppColors.whiteColor,
@@ -637,30 +638,75 @@ class PgTabhome extends GetView<TabHomeController> {
     return Row(
       children: [
         GestureDetector(
-          onTap: () => Get.toNamed('/messages'),
-          child: Image.asset(AppAssets.chat, width: 40, height: 40),
+          onTap: () async {
+            await Get.toNamed('/messages');
+            controller.getProfile();
+          },
+          child: Stack(
+            children: [
+              Image.asset(AppAssets.chat, width: 40, height: 40),
+              Obx(() => controller.ProfileData.value.data?.unreadChats == 0
+                  ? const SizedBox()
+                  : Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Container(
+                        height: 17,
+                        width: 17,
+                        child: Center(
+                          child: Text(
+                            "${controller.ProfileData.value.data?.unreadChats}",
+                            style: TextStyle(color: Colors.white, fontSize: 10),
+                          ),
+                        ).paddingSymmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(15)),
+                      )))
+            ],
+          ),
         ),
         padHorizontal(5),
         GestureDetector(
-          onTap: () => Get.toNamed('/notification'),
-          child: Image.asset(AppAssets.bell, width: 40, height: 40),
+          onTap: () async {
+            await Get.toNamed('/notification');
+            controller.getProfile();
+          },
+          child: Stack(
+            children: [
+              Image.asset(AppAssets.bell, width: 40, height: 40),
+              Obx(() => controller
+                          .ProfileData.value.data?.unreadNotifications ==
+                      0
+                  ? const SizedBox()
+                  : Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Container(
+                        height: 17,
+                        width: 17,
+                        child: Center(
+                          child: Text(
+                            "${controller.ProfileData.value.data?.unreadNotifications}",
+                            style: TextStyle(color: Colors.white, fontSize: 10),
+                          ),
+                        ).paddingSymmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(15)),
+                      )))
+            ],
+          ),
         ),
         padHorizontal(5),
         GestureDetector(
-          onTap: (){
+          onTap: () {
             // final dashboard=Get.find<DashboardController>();
             // dashboard.onTabSelected(3);
-            Get.toNamed(
-                '/userprofiledetail',
-                arguments: {
-                  "id": controller
-                      .ProfileData
-                      .value
-                      .data
-                      ?.sId ??
-                      "",
-                  "isAdmin": true
-                });
+            Get.toNamed('/userprofiledetail', arguments: {
+              "id": controller.ProfileData.value.data?.sId ?? "",
+              "isAdmin": true
+            });
           },
           child: Container(
             height: 34,
@@ -677,13 +723,14 @@ class PgTabhome extends GetView<TabHomeController> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(45),
               child: (controller.ProfileData.value.data?.profilePic != null &&
-                      controller.ProfileData.value.data!.profilePic?.isNotEmpty ==
+                      controller
+                              .ProfileData.value.data!.profilePic?.isNotEmpty ==
                           true)
                   ? Image.network(
-
-
-                controller.ProfileData.value.data!.profilePic!.startsWith('http')?controller.ProfileData.value.data?.profilePic??"":
-                      "${imageBaseUrl}${controller.ProfileData.value.data!.profilePic}",
+                      controller.ProfileData.value.data!.profilePic!
+                              .startsWith('http')
+                          ? controller.ProfileData.value.data?.profilePic ?? ""
+                          : "${imageBaseUrl}${controller.ProfileData.value.data!.profilePic}",
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
@@ -740,14 +787,15 @@ class PgTabhome extends GetView<TabHomeController> {
 
   Widget _buildBannerCarousel() {
     return CarouselSlider.builder(
-      itemCount: controller.responseModel.value.data?.banners?.length??0,
+      itemCount: controller.responseModel.value.data?.banners?.length,
       itemBuilder: (context, index, realIndex) => Container(
-width: Get.width,
-        height: Get.height*0.2,
+        width: Get.width,
+        height: Get.height * 0.2,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-            image: NetworkImage("${imageBaseUrl}${controller.responseModel.value.data?.banners?[index]??" "}"),
+            image: NetworkImage(
+                "${imageBaseUrl}${controller.responseModel.value.data?.banners?[index] ?? " "}"),
             fit: BoxFit.cover,
           ),
         ),
@@ -848,7 +896,7 @@ width: Get.width,
                                 padding: EdgeInsets.symmetric(horizontal: 4),
                                 child: Label(
                                   txt:
-                                      "${controller.responseModel.value.data?.upcomingMatches?[index]?.askToJoin==true?"Open Match" :"Private"}",
+                                      "${controller.responseModel.value.data?.upcomingMatches?[index]?.askToJoin == true ? "Open Match" : "Private"}",
                                   type: TextTypes.f_16_600,
                                   forceColor: AppColors.whiteColor,
                                 ),
@@ -893,9 +941,13 @@ width: Get.width,
                               Align(
                                 alignment: Alignment.center,
                                 child: GestureDetector(
-                                  onTap: (){
+                                  onTap: () {
                                     print(">>>>>>>>>>>>hellooooo>>>>>>");
-                                    Get.toNamed("/booking_detail",arguments: {"id":controller.responseModel.value.data?.upcomingMatches?[index].sId,"isCancel":true});
+                                    Get.toNamed("/booking_detail", arguments: {
+                                      "id": controller.responseModel.value.data
+                                          ?.upcomingMatches?[index].sId,
+                                      "isCancel": true
+                                    });
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
@@ -1011,8 +1063,10 @@ width: Get.width,
                     forceColor: AppColors.blackColor,
                   ),
                   padVertical(5),
-                  Obx(()=>Label(txt: "${controller.responseModel.value.data?.loyaltyPoints?.points.toString()}", type: TextTypes.f_16_600)),
-
+                  Obx(() => Label(
+                      txt:
+                          "${controller.responseModel.value.data?.loyaltyPoints?.points.toString()}",
+                      type: TextTypes.f_16_600)),
                 ],
               ),
               Column(
@@ -1023,8 +1077,11 @@ width: Get.width,
                     forceColor: AppColors.blackColor,
                   ),
                   padVertical(5),
-                  Obx(()=>Label(txt: "${controller.responseModel.value.data?.loyaltyPoints?.freeGames.toString()??"0"}", type: TextTypes.f_16_600,forceColor: Colors.green)),
-
+                  Obx(() => Label(
+                      txt:
+                          "${controller.responseModel.value.data?.loyaltyPoints?.freeGames.toString() ?? "0"}",
+                      type: TextTypes.f_16_600,
+                      forceColor: Colors.green)),
                 ],
               ),
             ],
@@ -1060,7 +1117,11 @@ width: Get.width,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(5, (index) {
-              bool isCompleted = index<((controller.responseModel.value.data?.loyaltyPoints?.level??0)/2).toInt();
+              bool isCompleted = index <
+                  ((controller.responseModel.value.data?.loyaltyPoints?.level ??
+                              0) /
+                          2)
+                      .toInt();
               return Container(
                 width: (Get.width * 0.3) / 4,
                 height: 4,

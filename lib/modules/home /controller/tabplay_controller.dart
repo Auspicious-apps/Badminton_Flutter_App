@@ -23,7 +23,7 @@ class PlayController extends GetxController {
   var latitude = 0.0.obs;
   var longitude = 0.0.obs;
   var currentDate = "".obs;
-  var game = "Padel".obs;
+  var game = "all".obs;
   final matches = List.generate(4, (index) => {}).obs;
   Rx<userResponseModel> ProfileData = userResponseModel().obs;
 
@@ -33,9 +33,7 @@ class PlayController extends GetxController {
     super.onInit();
   }
 
-
-  void showCalendarBottomSheet(
-      BuildContext context) {
+  void showCalendarBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -57,7 +55,7 @@ class PlayController extends GetxController {
                     const Text(
                       'Select Date',
                       style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     IconButton(
                       icon: const Icon(Icons.close),
@@ -69,12 +67,10 @@ class PlayController extends GetxController {
                 LinearCalendar(
                   itemWidth: 50,
                   selectedTextStyle:
-                  TextStyle(fontSize: 10, color: Colors.white),
+                      TextStyle(fontSize: 10, color: Colors.white),
                   unselectedTextStyle:
-                  TextStyle(fontSize: 10, color: Colors.black),
-
+                      TextStyle(fontSize: 10, color: Colors.black),
                   selectedColor: AppColors.primaryColor,
-
                   unselectedColor: AppColors.whiteColor,
                   onChanged: (DateTime value) {
                     currentDate.value = DateFormat('yyyy-MM-dd').format(value);
@@ -82,93 +78,131 @@ class PlayController extends GetxController {
                     // onDateConfirmed(value);
                   },
                   height: 70,
-                  key: ValueKey(currentDate.value),
-                  startDate:DateTime.now(),
+                  startDate: DateTime.now(),
                   backgroundColor: Colors.transparent,
                 ),
-
                 const Text(
                   'Select Game',
-                  style:
-                  TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ).marginSymmetric(vertical: 10),
                 Row(
                   children: [
                     GestureDetector(
-                      onTap:(){
-
-                        game.value="Padel";
+                      onTap: () {
+                        game.value = "all";
                       },
                       child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
-
                             children: [
-                              Obx(()=>  Container(
-                                height: 20,
-                                width: 20,
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 8),
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: AppColors.border,
-                                  borderRadius:
-                                  BorderRadius.circular(15),
-                                ),
-                                child:game.value=="Padel"? Container(
-                                  padding: const EdgeInsets.all(7),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primaryColor,
-                                    borderRadius:
-                                    BorderRadius.circular(15),
-                                  ),
-                                ):SizedBox(),
-                              )),
+                              Obx(() => Container(
+                                    height: 20,
+                                    width: 20,
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 8),
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.border,
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: game.value == "all"
+                                        ? Container(
+                                            padding: const EdgeInsets.all(7),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.primaryColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                          )
+                                        : SizedBox(),
+                                  )),
                               padHorizontal(15),
                               const Label(
-                                txt: "Paddle",
+                                txt: "All",
                                 type: TextTypes.f_14_500,
                               ),
                             ],
                           ),
-
                         ],
                       ),
                     ),
-                    SizedBox(width: 20,),
+                    SizedBox(
+                      width: 20,
+                    ),
                     GestureDetector(
-                      onTap:(){
-
-                        game.value="Pickleball";
+                      onTap: () {
+                        game.value = "Padel";
                       },
                       child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
-                              Obx(()=>  Container(
-                                height: 20,
-                                width: 20,
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 8),
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: AppColors.border,
-                                  borderRadius:
-                                  BorderRadius.circular(15),
-                                ),
-                                child:game.value=="Pickleball"? Container(
-                                  padding: const EdgeInsets.all(7),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primaryColor,
-                                    borderRadius:
-                                    BorderRadius.circular(15),
-                                  ),
-                                ):SizedBox(),
-                              )),
+                              Obx(() => Container(
+                                    height: 20,
+                                    width: 20,
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 8),
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.border,
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: game.value == "Padel"
+                                        ? Container(
+                                            padding: const EdgeInsets.all(7),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.primaryColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                          )
+                                        : SizedBox(),
+                                  )),
+                              padHorizontal(15),
+                              const Label(
+                                txt: "Padel",
+                                type: TextTypes.f_14_500,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        game.value = "Pickleball";
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Obx(() => Container(
+                                    height: 20,
+                                    width: 20,
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 8),
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.border,
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: game.value == "Pickleball"
+                                        ? Container(
+                                            padding: const EdgeInsets.all(7),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.primaryColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                          )
+                                        : SizedBox(),
+                                  )),
                               padHorizontal(15),
                               const Label(
                                 txt: "Pickleball",
@@ -176,7 +210,6 @@ class PlayController extends GetxController {
                               ),
                             ],
                           ),
-
                         ],
                       ),
                     ),
@@ -187,11 +220,24 @@ class PlayController extends GetxController {
                 Row(
                   children: [
                     Expanded(
-                        child:GestureDetector(onTap:() {
-                          Get.back();
-                        } ,child:
-                        Container(height:50,decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(8),border: Border.all(color: AppColors.primaryColor)),child: Center(child: Label(txt: "Cancel", type: TextTypes.f_14_600,forceColor: AppColors.primaryColor,),),))
+                        child: GestureDetector(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                      color: AppColors.primaryColor)),
+                              child: Center(
+                                child: Label(
+                                  txt: "Cancel",
+                                  type: TextTypes.f_14_600,
+                                  forceColor: AppColors.primaryColor,
+                                ),
+                              ),
+                            ))
 //                         commonButton(
 //                           forceColor: Color(value),
 //                             context: context,
@@ -201,8 +247,10 @@ class PlayController extends GetxController {
 //                             },
 //                             txt: "Cancel"
 //                         )
+                        ),
+                    SizedBox(
+                      width: 10,
                     ),
-                    SizedBox(width: 10,),
                     Expanded(
                         child: commonButton(
                             context: context,
@@ -210,9 +258,7 @@ class PlayController extends GetxController {
                               Get.back();
                               getBookingList();
                             },
-                            txt: "Apply"
-                        )
-                    ),
+                            txt: "Apply")),
                     // ElevatedButton(
                     //   onPressed: () {
                     //     Navigator.pop(context);
@@ -236,21 +282,19 @@ class PlayController extends GetxController {
       if (response != null) {
         ProfileData.value = response;
         ProfileData.refresh();
-
-
       }
     } catch (e) {
-      loading.value=false;
+      loading.value = false;
       Get.snackbar("Error", e.toString());
     }
-
   }
+
   @override
   void onReady() {
     super.onReady();
     getCurrentLocation();
-
   }
+
   Future<void> getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -284,33 +328,30 @@ class PlayController extends GetxController {
     latitude.value = pos.latitude;
     longitude.value = pos.longitude;
     getBookingList();
-
   }
 
-   getBookingList()async {
-    loading.value=true;
+  getBookingList() async {
+    loading.value = true;
     Get.closeAllSnackbars(); //
     try {
-      final response = await _apiRepository.getAllopenBookings(query:{
-        "lng":longitude.value,
-        "lat":latitude.value,
-        "date":currentDate.value,
-        "game":game.value
-
+      final response = await _apiRepository.getAllopenBookings(query: {
+        "lng": longitude.value,
+        "lat": latitude.value,
+        if (currentDate.value != "" || currentDate.value != null)
+          "date": currentDate.value,
+        "game": game.value
       });
       if (response != null) {
         bookList.value = response;
-        loading.value=false;
-
+        loading.value = false;
       }
     } catch (e) {
       Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.TOP);
-      loading.value=false;
-    }finally{
-      loading.value=false;
+      loading.value = false;
+    } finally {
+      loading.value = false;
     }
   }
-
 
   void onJoinMatch(int index) {
     // Logic for joining a match

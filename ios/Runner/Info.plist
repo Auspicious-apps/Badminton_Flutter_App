@@ -27,10 +27,13 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.aus.org.badminton</string>
+				<string>com.googleusercontent.apps.48002840638-muij1uqvo6867lpp7qk97gk5q494p2k6</string>
 			</array>
 		</dict>
 	</array>
+	<key>REVERSED_CLIENT_ID</key>
+    <string>com.googleusercontent.apps.48002840638-muij1uqvo6867lpp7qk97gk5q494p2k6</string>
+
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>

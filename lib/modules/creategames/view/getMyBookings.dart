@@ -40,9 +40,7 @@ class Getmybookings extends GetView<GetMyBookingsController> {
         print("${matchDate.day},${matchDate.month}>>>>>>>>>>>>Dates");
 
         print(currentDate.isAtSameMomentAs(matchDate));
-        if(currentDate.isAtSameMomentAs(matchDate)){
-          return false;
-        }else if(currentDate.isAfter(matchDate)){
+         if(currentDate.isAfter(matchDate)){
           return true;
         }else{
          return false;
@@ -160,7 +158,7 @@ class Getmybookings extends GetView<GetMyBookingsController> {
                           print(">>>>>>>>>>>>hellooooo>>>>>>");
                           Get.toNamed("/booking_detail", arguments: {
                             "id": controller.bookList.value.data?[index].sId,"isCancel": !isMatchTimePassed(match?.bookingDate ?? "") &&
-                              isExactMatchTime(match?.bookingSlots)
+                              isExactMatchTime(match?.bookingSlots)?true:match?.status=="upcoming"?true:false
                           });
                         },
                         child: Container(
@@ -763,7 +761,7 @@ class Getmybookings extends GetView<GetMyBookingsController> {
                                      !isMatchTimePassed(match?.bookingDate ?? "") &&
                                     isExactMatchTime(match?.bookingSlots)
                                       ?  match?.askToJoin == true ||
-                                         match?.bookingType == "Cancelled"?SizedBox() :GestureDetector(
+                                         match?.bookingType == "Cancelled"?SizedBox()  :GestureDetector(
                                     onTap: () async {
                                       Get.defaultDialog(
                                         title: "Confirm Cancellation",
@@ -802,7 +800,45 @@ class Getmybookings extends GetView<GetMyBookingsController> {
                                       ),
                                     ),
                                   )
-                                      :GestureDetector(
+                                      :match?.status=="upcoming"? GestureDetector(
+                                       onTap: () async {
+                                         Get.defaultDialog(
+                                           title: "Confirm Cancellation",
+                                           titleStyle: TextStyle(
+                                             fontSize: 18.sp,
+                                             fontWeight: FontWeight.w600,
+                                             color: AppColors.primaryColor,
+                                           ),
+                                           middleText: "Are you sure you want to cancel this booking?",
+                                           middleTextStyle: TextStyle(fontSize: 16.sp),
+                                           textConfirm: "Yes, Cancel",
+                                           textCancel: "No",
+                                           confirmTextColor: AppColors.whiteColor,
+                                           cancelTextColor: AppColors.primaryColor,
+                                           buttonColor: AppColors.primaryColor,
+                                           backgroundColor: AppColors.background,
+                                           radius: 10,
+                                           onConfirm: () async {
+                                             Get.closeAllSnackbars();
+                                             controller.CancleBooking(match?.sId ?? "");
+                                           },
+                                           onCancel: () {},
+                                         );
+                                       },
+                                       child: Container(
+                                         padding: const EdgeInsets.all(10),
+                                         decoration: BoxDecoration(
+                                           color: AppColors.whiteColor,
+                                           border: Border.all(color: AppColors.orange),
+                                           borderRadius: BorderRadius.circular(5),
+                                         ),
+                                         child: Label(
+                                           txt: "Cancel",
+                                           type: TextTypes.f_10_600,
+                                           forceColor: AppColors.orange,
+                                         ),
+                                       ),
+                                     )  :   GestureDetector(
                                     onTap: () async {
                                       final score = match?.score ??
                                           Score(

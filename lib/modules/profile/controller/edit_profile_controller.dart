@@ -19,7 +19,7 @@ class EditProfileController extends GetxController {
   RxBool isUploading = false.obs;
   RxString profilePicUrl = ''.obs;
   RxString pickimagece = ''.obs;
-
+  final ImagePicker _picker = ImagePicker();
   Rx<File?> pickedImage = Rx<File?>(null);
   late userResponseModel responseModel; // Changed to late for initialization
   MediaUploadResponseModel? mediaUploadResponseModel; // Allow null initially
@@ -31,7 +31,7 @@ class EditProfileController extends GetxController {
   final phoneController = TextEditingController();
   final newPassword = TextEditingController();
   final confirmPassword = TextEditingController(); // Renamed for consistency
-  final ImagePicker _picker = ImagePicker();
+
   Rx<Country> selectedCountry = Rx<Country>(
     Country(
       phoneCode: '91',
@@ -81,8 +81,9 @@ class EditProfileController extends GetxController {
       isUploading.value = true;
       final response = await _apiRepository.mediaUploadApiCall(file);
       mediaUploadResponseModel = response;
-      pickimagece.value="";
-      profilePicUrl.value = response.data?.imageKey ?? ''; // Update profilePicUrl
+      pickimagece.value = "";
+      profilePicUrl.value =
+          response.data?.imageKey ?? ''; // Update profilePicUrl
       hitSignupApiCall();
 
       return response;
@@ -106,12 +107,15 @@ class EditProfileController extends GetxController {
       final requestModel = AuthRequestModel.updateProfile(
         firstName: firstNameController.text.trim(),
         lastName: lastNameController.text.trim(),
-        oldPassword:confirmPassword.text.trim(),
+        oldPassword: confirmPassword.text.trim(),
         password: newPassword.text.trim(),
-        profilePic:  profilePicUrl.value.isNotEmpty? profilePicUrl.value:pickimagece.value, // Use uploaded image URL
+        profilePic: profilePicUrl.value.isNotEmpty
+            ? profilePicUrl.value
+            : pickimagece.value, // Use uploaded image URL
       );
 
-      final response = await _apiRepository.updateProfile(dataBody: requestModel);
+      final response =
+          await _apiRepository.updateProfile(dataBody: requestModel);
 
       responseModel = response; // Update responseModel
       Get.back();
@@ -121,7 +125,6 @@ class EditProfileController extends GetxController {
         'Profile updated successfully',
         snackPosition: SnackPosition.TOP,
       );
-
     } catch (e, stackTrace) {
       isLoading.value = false;
       debugPrint('Error during profile update: $e\nStack trace: $stackTrace');
@@ -130,7 +133,7 @@ class EditProfileController extends GetxController {
         'Failed to update profile: $e',
         snackPosition: SnackPosition.TOP,
       );
-    }finally{
+    } finally {
       isLoading.value = false;
     }
   }
@@ -145,9 +148,9 @@ class EditProfileController extends GetxController {
       );
       if (image != null) {
         pickedImage.value = File(image.path);
-        debugPrint('Image picked: ${image.path}, size: ${await image.length()} bytes');
+        debugPrint(
+            'Image picked: ${image.path}, size: ${await image.length()} bytes');
         // Optionally upload immediately after picking
-
       } else {
         Get.snackbar('Info', 'No image selected');
       }
